@@ -16,7 +16,7 @@ SIED · Facultad de Ciencias Económicas · Universidad Nacional de Cuyo.
   hace falta conocer ningún atajo ni código. Los botones están en seis solapas: Básico,
   Funciones, Cálculo, Griegas, Conjuntos y matrices, y **Economía y finanzas** (interés compuesto,
   tasa efectiva, valor actual, VAN, TIR, elasticidad, costo marginal, promedio, desvío y regresión).
-- Para quien lo prefiera, el **código LaTeX** se ve y se edita en la misma ventana.
+- Al pie, chico como una nota, se puede ver y editar el **código LaTeX**, para quien lo sepa usar.
 - Las fórmulas se ven dibujadas **dentro del editor**, y con doble clic se vuelven a editar.
 - En celulares y tabletas aparece un teclado matemático en pantalla.
 - Si quedan casilleros sin completar, la ventana lo avisa y no inserta la fórmula.
