@@ -32,7 +32,7 @@ use moodle_url;
  * contenido se sigue viendo aunque el plugin se desinstale.
  *
  * @package    tiny_ecuaciones
- * @copyright  2026 SIED, Facultad de Ciencias Económicas, Universidad Nacional de Cuyo
+ * @copyright  2026 Gerardo Martín Gil Carretero <gerardo.gil@fce.uncu.edu.ar>, Equipo SIED, FCE, UNCuyo
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class plugininfo extends plugin implements plugin_with_buttons, plugin_with_menuitems, plugin_with_configuration {

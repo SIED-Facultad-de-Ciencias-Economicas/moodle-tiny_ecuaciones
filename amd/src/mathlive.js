@@ -21,7 +21,7 @@
  * aunque haya varios editores.
  *
  * @module      tiny_ecuaciones/mathlive
- * @copyright   2026 SIED, Facultad de Ciencias Económicas, Universidad Nacional de Cuyo
+ * @copyright   2026 Gerardo Martín Gil Carretero <gerardo.gil@fce.uncu.edu.ar>, Equipo SIED, FCE, UNCuyo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

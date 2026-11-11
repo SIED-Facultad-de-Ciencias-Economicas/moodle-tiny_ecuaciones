@@ -4,7 +4,8 @@ Plugin para el editor TinyMCE de Moodle que permite armar fórmulas en forma gr�
 científica, sin saber LaTeX. Lo pueden usar los docentes en recursos y actividades, y los alumnos
 en foros, tareas, wikis y preguntas de ensayo de los cuestionarios.
 
-SIED · Facultad de Ciencias Económicas · Universidad Nacional de Cuyo.
+Diseño y desarrollo: Gerardo Martín Gil Carretero (gerardo.gil@fce.uncu.edu.ar) · Equipo SIED ·
+Facultad de Ciencias Económicas · UNCuyo.
 
 ![La ventana para escribir una fórmula](docs/ventana.png)
 
@@ -130,6 +131,13 @@ local sin sus fuentes, así que en la página se veía con letras de reemplazo. 
 producción conviene probarlo en el Moodle de prueba de la facultad.
 
 ![En el celular, con el teclado matemático](docs/celular.png)
+
+## Autoría
+
+Diseño y desarrollo: Gerardo Martín Gil Carretero (gerardo.gil@fce.uncu.edu.ar) · Equipo SIED ·
+Facultad de Ciencias Económicas · UNCuyo.
+
+La firma va también en el encabezado `@copyright` de cada archivo del plugin. No se quita ni se cambia.
 
 ## Licencia
 
