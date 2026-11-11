@@ -123,6 +123,7 @@ $string['codigo_ayuda'] = 'The formula is saved as this code. You can also type 
 $string['dialogtitle'] = 'Write a formula';
 $string['ecuaciones:use'] = 'Use the equation editor';
 $string['filtroinactivo'] = 'The MathJax filter is not enabled here: the formula will be saved, but readers will see it as code. Ask the site administrator to enable it.';
+$string['firma'] = 'Design and development: Gerardo Martín Gil Carretero (gerardo.gil@fce.uncu.edu.ar) · SIED team · Facultad de Ciencias Económicas · UNCuyo';
 $string['g_basico'] = 'Basic';
 $string['g_calculo'] = 'Calculus';
 $string['g_conjuntos'] = 'Sets and matrices';

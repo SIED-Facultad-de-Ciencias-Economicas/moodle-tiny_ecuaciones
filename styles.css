@@ -68,6 +68,15 @@
     gap: .5rem;
     margin-top: .8rem;
 }
+/* La firma del autor, al pie de la ventana: chica y discreta. No se quita ni se cambia. */
+.tiny-ecuaciones-firma {
+    margin: .75rem 0 0;
+    font-size: .65rem;
+    line-height: 1.3;
+    color: #8a9199;
+    text-align: right;
+}
+
 /* El código LaTeX va al pie, chico y gris, como una nota: la fórmula se arma con los botones. */
 .tiny-ecuaciones-codigo {
     margin-top: .75rem;

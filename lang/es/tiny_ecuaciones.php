@@ -123,6 +123,7 @@ $string['codigo_ayuda'] = 'La fórmula se guarda como este código. También pod
 $string['dialogtitle'] = 'Escribir una fórmula';
 $string['ecuaciones:use'] = 'Usar el editor de ecuaciones';
 $string['filtroinactivo'] = 'El filtro MathJax no está activo acá: la fórmula se guarda, pero quien la lea va a ver el código. Pedile al administrador del sitio que lo active.';
+$string['firma'] = 'Diseño y desarrollo: Gerardo Martín Gil Carretero (gerardo.gil@fce.uncu.edu.ar) · Equipo SIED · Facultad de Ciencias Económicas · UNCuyo';
 $string['g_basico'] = 'Básico';
 $string['g_calculo'] = 'Cálculo';
 $string['g_conjuntos'] = 'Conjuntos y matrices';

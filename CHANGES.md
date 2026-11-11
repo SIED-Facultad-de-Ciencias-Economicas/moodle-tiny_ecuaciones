@@ -10,3 +10,4 @@ Primera versión.
 - Las fórmulas se ven dibujadas dentro del editor y se reeditan con doble clic.
 - Se guardan como LaTeX entre `\( \)` o `\[ \]`, que dibuja el filtro MathJax de Moodle.
 - Teclado matemático en pantalla en celulares y tabletas.
+- Firma del autor, en letra chica, al pie de la ventana.

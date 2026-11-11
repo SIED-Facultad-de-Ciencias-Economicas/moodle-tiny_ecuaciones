@@ -137,7 +137,8 @@ producción conviene probarlo en el Moodle de prueba de la facultad.
 Diseño y desarrollo: Gerardo Martín Gil Carretero (gerardo.gil@fce.uncu.edu.ar) · Equipo SIED ·
 Facultad de Ciencias Económicas · UNCuyo.
 
-La firma va también en el encabezado `@copyright` de cada archivo del plugin. No se quita ni se cambia.
+La firma va también al pie de la ventana del editor, en letra chica, y en el encabezado `@copyright` de
+cada archivo del plugin. No se quita ni se cambia.
 
 ## Licencia
 
