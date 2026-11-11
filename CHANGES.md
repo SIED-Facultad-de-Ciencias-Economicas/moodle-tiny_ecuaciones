@@ -1,5 +1,12 @@
 # Cambios
 
+## 0.2.0 — 11 de noviembre de 2026
+
+- Nombre: «Editor visual de ecuaciones» (*Visual equation editor* en inglés), para distinguirlo del
+  editor de ecuaciones que trae Moodle.
+- Seno y tangente según el idioma: «sen» y «tg» en español; sin y tan en los demás.
+- Cada versión se publica en Releases de GitHub con su ZIP instalable.
+
 ## 0.1.0 — 11 de noviembre de 2026
 
 Primera versión. Para Moodle 4.5 o posterior.

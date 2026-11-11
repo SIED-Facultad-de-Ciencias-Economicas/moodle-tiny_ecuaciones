@@ -1,4 +1,6 @@
-# Editor de ecuaciones para Moodle (`tiny_ecuaciones`)
+# Editor visual de ecuaciones para Moodle (`tiny_ecuaciones`)
+
+*Visual equation editor* en inglés.
 
 Plugin para el editor TinyMCE de Moodle que permite armar fórmulas en forma gráfica, con botones como los de una calculadora
 científica, sin saber LaTeX. Lo pueden usar los docentes en recursos y actividades, y los alumnos
@@ -51,8 +53,10 @@ contenido:
 
 El nombre de la carpeta tiene que ser **`ecuaciones`**.
 
-**Opción A — desde la administración de Moodle.** Administración del sitio → Extensiones →
-Instalar complementos → subir `tiny_ecuaciones-<versión>.zip` → seguir los pasos.
+**Opción A — desde la administración de Moodle.** Bajar `tiny_ecuaciones-<versión>.zip` de la
+página [Releases](https://github.com/SIED-Facultad-de-Ciencias-Economicas/moodle-tiny_ecuaciones/releases)
+del repositorio (el que **no** dice «directorio») y subirlo en Administración del sitio →
+Extensiones → Instalar complementos.
 
 **Opción B — en el servidor.**
 
@@ -107,6 +111,13 @@ vendor/mathlive copia de MathLive 0.111.4         styles.css   estilos de la ven
 - **Pruebas:** cada push corre la Action «Pruebas de Moodle» (`moodle-plugin-ci`): estilo de código,
   PHPDoc, validación, plantillas, `grunt`, PHPUnit (`tests/`) y Behat (`tests/behat/`). Son los
   mismos controles que usa el equipo de Moodle para revisar los plugins del directorio.
+- **Publicar una versión:** subir `$plugin->version` y `$plugin->release` en `version.php`,
+  anotar los cambios en `CHANGES.md` y, ya en `main`, crear la etiqueta `v<release>` (por ejemplo
+  `v0.2.0`). La Action «Publicar versión» controla que coincidan y deja en Releases dos ZIP: el
+  completo, para la FCE, y el «directorio», sólo con inglés, para moodle.org/plugins.
+- **Traducciones:** el directorio de Moodle carga las traducciones desde AMOS
+  (lang.moodle.org), no desde el plugin. Una vez aprobado, el español de `lang/es/` se sube ahí; el
+  ZIP completo lo sigue trayendo para que la FCE no dependa de eso.
 - Para actualizar MathLive: reemplazar `vendor/mathlive` por `mathlive.min.js`, `mathlive-static.css`,
   `mathlive-fonts.css`, `fonts/` y `LICENSE.txt` del paquete nuevo, y cambiar la versión en
   `thirdpartylibs.xml`.

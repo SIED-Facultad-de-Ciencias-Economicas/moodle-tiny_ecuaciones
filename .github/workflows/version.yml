@@ -1,0 +1,49 @@
+# Al subir una etiqueta vX.Y.Z (la misma versión que $plugin->release en version.php), arma los ZIP
+# instalables y los publica en Releases de GitHub:
+#   tiny_ecuaciones-X.Y.Z.zip             completo, con español: el que se instala en la FCE.
+#   tiny_ecuaciones-X.Y.Z-directorio.zip  sólo con inglés, para moodle.org/plugins: las otras
+#                                         traducciones se cargan en AMOS.
+name: Publicar versión
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Bajar el plugin
+        uses: actions/checkout@v4
+        with:
+          path: ecuaciones
+
+      - name: Controlar que la etiqueta coincida con version.php
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          release=$(sed -n "s/^\$plugin->release *= *'\(.*\)';.*/\1/p" ecuaciones/version.php)
+          echo "Etiqueta: $version · version.php: $release"
+          test "$version" = "$release"
+
+      - name: Armar los ZIP
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          rm -rf ecuaciones/.git ecuaciones/.github
+          zip -qr "tiny_ecuaciones-$version.zip" ecuaciones
+          mkdir directorio
+          cp -r ecuaciones directorio/
+          find directorio/ecuaciones/lang -mindepth 1 -maxdepth 1 -type d ! -name en -exec rm -rf {} +
+          (cd directorio && zip -qr "../tiny_ecuaciones-$version-directorio.zip" ecuaciones)
+          unzip -l "tiny_ecuaciones-$version-directorio.zip" | grep "/lang/"
+
+      - name: Publicar en Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" tiny_ecuaciones-*.zip \
+            --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" \
+            --notes "Cambios en CHANGES.md. Para instalar en la FCE: tiny_ecuaciones-${GITHUB_REF_NAME#v}.zip."
