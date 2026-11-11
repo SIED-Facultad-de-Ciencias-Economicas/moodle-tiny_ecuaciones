@@ -29,6 +29,7 @@ final class plugininfo_test extends \advanced_testcase {
      * Con el filtro MathJax activo o apagado, la configuración lo informa y da la carpeta de MathLive.
      *
      * @param bool $activo Si el filtro MathJax está activo.
+     * @dataProvider filtro_provider
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('filtro_provider')]
     public function test_configuracion(bool $activo): void {

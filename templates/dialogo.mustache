@@ -38,7 +38,7 @@
     {{#sinfiltro}}
     <div class="alert alert-warning">{{#str}} filtroinactivo, tiny_ecuaciones {{/str}}</div>
     {{/sinfiltro}}
-    <label class="visually-hidden" for="{{uid}}-campo">{{#str}} campo, tiny_ecuaciones {{/str}}</label>
+    <label class="sr-only visually-hidden" for="{{uid}}-campo">{{#str}} campo, tiny_ecuaciones {{/str}}</label>
     <math-field id="{{uid}}-campo" class="tiny-ecuaciones-campo"></math-field>
     <p class="tiny-ecuaciones-ayuda form-text text-muted">{{#str}} ayuda, tiny_ecuaciones {{/str}}</p>
     <div class="alert alert-warning py-2" role="alert" data-region="vacios" hidden>{{#str}} vacios, tiny_ecuaciones {{/str}}</div>
@@ -72,7 +72,7 @@
 
     <details class="tiny-ecuaciones-codigo">
         <summary>{{#str}} codigo, tiny_ecuaciones {{/str}}</summary>
-        <label class="visually-hidden" for="{{uid}}-codigo">{{#str}} codigo, tiny_ecuaciones {{/str}}</label>
+        <label class="sr-only visually-hidden" for="{{uid}}-codigo">{{#str}} codigo, tiny_ecuaciones {{/str}}</label>
         <textarea id="{{uid}}-codigo" class="form-control" rows="2" spellcheck="false" dir="ltr"
             data-region="codigo"></textarea>
         <p class="form-text text-muted">{{#str}} codigo_ayuda, tiny_ecuaciones {{/str}}</p>

@@ -19,9 +19,10 @@ Feature: Armar fórmulas en forma gráfica con el editor de ecuaciones
     And I click on "Pi" "button" in the "Write a formula" "dialogue"
     And I click on "Insert" "button" in the "Write a formula" "dialogue"
     Then the field "Description" matches value "<p>\(\pi\)</p>"
+    # Se guarda como LaTeX: al volver a abrir el perfil, la fórmula sigue ahí.
     And I click on "Update profile" "button"
-    And I follow "Profile" in the user menu
-    And "π" "text" should exist
+    And I open my profile in edit mode
+    And the field "Description" matches value "<p>\(\pi\)</p>"
 
   @javascript
   Scenario: No se inserta una fórmula con casilleros vacíos

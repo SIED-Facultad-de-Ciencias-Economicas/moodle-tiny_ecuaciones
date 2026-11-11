@@ -143,7 +143,12 @@ const dibujar = (editor, ML) => {
         const fragmento = doc.createDocumentFragment();
         let desde = 0;
         for (const m of nodo.data.matchAll(PATRON)) {
-            const tipo = m[1] !== undefined ? 'linea' : (m[2] !== undefined ? 'bloque' : 'dolares');
+            let tipo = 'dolares';
+            if (m[1] !== undefined) {
+                tipo = 'linea';
+            } else if (m[2] !== undefined) {
+                tipo = 'bloque';
+            }
             const tex = (m[1] ?? m[2] ?? m[3]).trim();
             if (!tex) {
                 continue;

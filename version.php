@@ -28,5 +28,5 @@ $plugin->component = 'tiny_ecuaciones';
 $plugin->version   = 2026111100;
 $plugin->release   = '0.1.0';
 $plugin->maturity  = MATURITY_BETA;
-// Moodle 5.3. Es la única versión en la que se probó; ver README.md.
-$plugin->requires  = 2026100500;
+// Moodle 4.5 (TinyMCE 7) en adelante; ver «Requisitos» en README.md.
+$plugin->requires  = 2024100700;
