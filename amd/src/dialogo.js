@@ -105,10 +105,16 @@ export const abrirDialogo = async(editor) => {
             buttons: {save: textoBoton},
             large: true,
             removeOnClose: true,
-            show: true,
+            show: false,
         });
 
+        // Al abrirse, Moodle mueve el foco a la ventana. Si eso pasa después de que lo pusimos en el
+        // campo, el primer botón que se toca no escribe en él (pasaba en Moodle 4.5): por eso el
+        // foco va al campo recién cuando la ventana terminó de abrirse.
         const raiz = modal.getRoot()[0];
+        const enfocarCampo = () => setTimeout(() => raiz.querySelector('math-field')?.focus(), 0);
+        modal.getRoot().on(ModalEvents.shown, enfocarCampo);
+        modal.show();
         await modal.getBodyPromise();
         const campo = raiz.querySelector('math-field');
         const codigo = raiz.querySelector('[data-region="codigo"]');
@@ -145,7 +151,8 @@ export const abrirDialogo = async(editor) => {
                 e.preventDefault();
                 campo.executeCommand(['insert', boton.dataset.tex, {selectionMode: 'placeholder'}]);
                 codigo.value = campo.value;
-                campo.focus();
+                // Un instante después: en Moodle 4.5, tras el clic, el foco vuelve al botón tocado.
+                enfocarCampo();
                 return;
             }
             const solapa = e.target.closest('[role="tab"]');
@@ -156,7 +163,7 @@ export const abrirDialogo = async(editor) => {
             if (e.target.closest('[data-action="borrar"]')) {
                 campo.value = '';
                 codigo.value = '';
-                campo.focus();
+                enfocarCampo();
             }
         });
 
@@ -172,8 +179,7 @@ export const abrirDialogo = async(editor) => {
             e.preventDefault();
         });
 
-        modal.getRoot().on(ModalEvents.shown, () => campo.focus());
-        campo.focus();
+        enfocarCampo();
 
         // El teclado en pantalla de MathLive se cierra junto con la ventana.
         modal.getRoot().on(ModalEvents.hidden, () => window.mathVirtualKeyboard?.hide());

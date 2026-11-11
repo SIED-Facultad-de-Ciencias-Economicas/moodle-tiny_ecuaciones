@@ -2,7 +2,7 @@
 
 ## 0.1.0 — 11 de noviembre de 2026
 
-Primera versión.
+Primera versión. Para Moodle 4.5 o posterior.
 
 - Botón «Fórmula» en la barra de TinyMCE y en el menú «Insertar», para docentes y alumnos.
 - Ventana para armar la fórmula en forma gráfica (MathLive): botones en seis solapas —Básico, Funciones, Cálculo,

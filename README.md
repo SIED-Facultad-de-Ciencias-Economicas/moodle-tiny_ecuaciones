@@ -40,9 +40,8 @@ contenido:
 
 ## Requisitos
 
-- **Moodle 5.3** (TinyMCE 8). Es la versión en la que se probó. Probablemente ande en 5.0, 5.1 y
-  5.2, que usan la misma interfaz de plugins del editor, pero no se probó. Para instalarlo en una
-  de esas versiones hay que bajar `$plugin->requires` en `version.php`.
+- **Moodle 4.5 o posterior** (TinyMCE 7 en 4.5, TinyMCE 8 en 5.3). Se probó en 4.5 y en 5.3; las
+  versiones intermedias (5.0, 5.1 y 5.2) usan la misma interfaz de plugins del editor.
 - El filtro **«MathJax»** activo (Administración del sitio → Extensiones → Filtros). Viene activo
   de fábrica. Si no lo está, la ventana avisa que las fórmulas se van a ver como código.
 - Nada más: no lleva base de datos propia, ni tareas programadas, ni servicios externos. MathLive
@@ -69,7 +68,7 @@ git clone https://github.com/SIED-Facultad-de-Ciencias-Economicas/moodle-tiny_ec
 php <raíz de Moodle>/admin/cli/upgrade.php
 ```
 
-En Moodle 5.0 y anteriores la carpeta es `lib/editor/tiny/plugins` (sin `public/`).
+En Moodle 4.5 y 5.0 la carpeta es `lib/editor/tiny/plugins` (sin `public/`).
 
 ### Después de instalar
 
@@ -101,22 +100,30 @@ vendor/mathlive copia de MathLive 0.111.4         styles.css   estilos de la ven
 
 - Los botones de la paleta están en `amd/src/paleta.js`. Cada uno lleva su nombre en
   `lang/*/tiny_ecuaciones.php` (cadena `b_<clave>`).
-- **Después de tocar `amd/src` hay que compilar y commitear `amd/build`.** La forma oficial es
-  `npx grunt amd` desde la raíz de un Moodle de desarrollo con sus dependencias de Node. Sin ese
-  entorno, `tools/compilar.sh` hace lo mismo con el compilador de TypeScript (`tsc`), sin
-  instalar nada; su salida no está minificada.
+- **`amd/build` lo compila GitHub.** Al subir un cambio en `amd/src`, la Action «Compilar
+  JavaScript» lo pasa por el `grunt` de Moodle y sube `amd/build` a la misma rama. También se puede
+  correr a mano desde la pestaña Actions. Con un Moodle de desarrollo a mano, da lo mismo correr
+  `npx grunt amd` desde su raíz.
+- **Pruebas:** cada push corre la Action «Pruebas de Moodle» (`moodle-plugin-ci`): estilo de código,
+  PHPDoc, validación, plantillas, `grunt`, PHPUnit (`tests/`) y Behat (`tests/behat/`). Son los
+  mismos controles que usa el equipo de Moodle para revisar los plugins del directorio.
 - Para actualizar MathLive: reemplazar `vendor/mathlive` por `mathlive.min.js`, `mathlive-static.css`,
   `mathlive-fonts.css`, `fonts/` y `LICENSE.txt` del paquete nuevo, y cambiar la versión en
   `thirdpartylibs.xml`.
 
 ## Cómo se probó
 
-En un Moodle 5.3+ (build 20261030) con PostgreSQL y Chromium:
+**Pruebas automáticas.** Cada cambio pasa por `moodle-plugin-ci` en Moodle 4.5 (PHP 8.1) y 5.3
+(PHP 8.3): estilo de código, PHPDoc, validación, plantillas, `grunt`, PHPUnit y cuatro escenarios
+Behat (insertar con los botones, el aviso de casilleros vacíos, el dibujo de las fórmulas guardadas
+con su vuelta a LaTeX, y la reedición).
+
+**A mano**, en Moodle 4.5.15+ y 5.3+ con PostgreSQL y Chromium:
 
 - Abrir un mensaje de foro con fórmulas `\( \)` y `$$ $$`: se dibujan en el editor y el texto no
   queda marcado como modificado.
-- Insertar desde el teclado (`3/4`) y desde los botones; reeditar con doble clic; editar el código
-  LaTeX; publicar. En la base queda LaTeX limpio y MathJax lo dibuja en la discusión.
+- Armar fórmulas sólo con botones y clics en los casilleros; reeditar con doble clic; editar el
+  código LaTeX; publicar. En la base queda LaTeX limpio.
 - Lo mismo como **alumno** (rol estudiante), con la interfaz en español: el LaTeX pasa la limpieza
   de HTML intacto.
 - Celular a 320, 360, 390 y 414 px: la ventana no se desplaza de costado y el teclado en pantalla
@@ -124,11 +131,9 @@ En un Moodle 5.3+ (build 20261030) con PostgreSQL y Chromium:
 - Fórmulas con código malicioso (`\text{<img onerror>}`, `\href{javascript:…}`, `\class`): no
   agregan HTML ni se ejecutan dentro del editor. La que MathLive rechaza queda como texto.
 
-**Falta probar:** las pruebas automáticas de Moodle (PHPUnit, Behat), el control de estilo
-(`moodle-plugin-ci`), la compilación con `grunt`, otras versiones de Moodle, y Safari en iPhone.
-Para la prueba se instaló PostgreSQL 16, aunque Moodle 5.3 pide 17. MathJax se sirvió desde una copia
-local sin sus fuentes, así que en la página se veía con letras de reemplazo. Antes de usarlo en
-producción conviene probarlo en el Moodle de prueba de la facultad.
+**Falta probar:** Moodle 5.0, 5.1 y 5.2, y Safari en iPhone. En las pruebas a mano MathJax no
+pudo bajarse de Internet: en 5.3 se usó una copia local sin sus fuentes (las fórmulas salían con
+letras de reemplazo) y en 4.5 no se dibujaron en la página publicada (sí en el editor). Antes de usarlo en producción conviene probarlo en el Moodle de prueba de la facultad.
 
 ![En el celular, con el teclado matemático](docs/celular.png)
 
