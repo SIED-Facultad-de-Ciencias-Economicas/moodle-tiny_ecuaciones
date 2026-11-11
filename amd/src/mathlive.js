@@ -1,0 +1,66 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Carga MathLive desde la copia que trae el plugin (vendor/mathlive), sin CDN.
+ *
+ * MathLive se distribuye como UMD: con RequireJS en la página se registra como módulo AMD anónimo,
+ * así que se le da un nombre propio con `paths` y se pide con `require`. Una sola carga por página,
+ * aunque haya varios editores.
+ *
+ * @module      tiny_ecuaciones/mathlive
+ * @copyright   2026 SIED, Facultad de Ciencias Económicas, Universidad Nacional de Cuyo
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+const MODULO = 'tiny_ecuaciones_mathlive';
+let promesa = null;
+
+/**
+ * Devuelve MathLive, cargándolo la primera vez.
+ *
+ * @param {string} url Carpeta de MathLive, terminada en barra.
+ * @returns {Promise<object>}
+ */
+export const cargarMathLive = (url) => {
+    if (promesa) {
+        return promesa;
+    }
+    // Los botones de la paleta muestran el símbolo con el dibujo estático de MathLive: necesita sus
+    // estilos y sus fuentes también en la página (dentro del editor se cargan aparte).
+    ['mathlive-fonts.css', 'mathlive-static.css'].forEach((hoja) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = url + hoja;
+        document.head.append(link);
+    });
+    promesa = new Promise((resolve, reject) => {
+        window.require.config({paths: {[MODULO]: url + 'mathlive.min'}});
+        window.require([MODULO], (ML) => {
+            const MF = ML.MathfieldElement;
+            MF.fontsDirectory = url + 'fonts';
+            MF.soundsDirectory = null;
+            MF.plonkSound = null;
+            MF.keypressSound = null;
+            const idioma = (document.documentElement.lang || 'es').slice(0, 2);
+            MF.locale = idioma;
+            resolve(ML);
+        }, (error) => {
+            promesa = null;
+            reject(error);
+        });
+    });
+    return promesa;
+};

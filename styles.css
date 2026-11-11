@@ -1,0 +1,81 @@
+/* Ventana del editor de ecuaciones (tiny_ecuaciones). */
+.tiny-ecuaciones-campo {
+    display: block;
+    width: 100%;
+    min-height: 3.5rem;
+    padding: .5rem .75rem;
+    font-size: 1.6rem;
+    border: 1px solid #8f959e;
+    border-radius: .375rem;
+}
+.tiny-ecuaciones-campo:focus-within {
+    border-color: #0f6cbf;
+    box-shadow: 0 0 0 .2rem rgba(15, 108, 191, .25);
+}
+.tiny-ecuaciones-campo::part(menu-toggle) {
+    display: none;
+}
+.tiny-ecuaciones-ayuda {
+    margin: .4rem 0 .8rem;
+}
+.tiny-ecuaciones-solapas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: .5rem;
+}
+.tiny-ecuaciones-solapas [role="tab"] {
+    border: 1px solid transparent;
+    border-radius: .375rem .375rem 0 0;
+    margin-bottom: -1px;
+}
+.tiny-ecuaciones-solapas [role="tab"].active {
+    border-color: #dee2e6 #dee2e6 #fff;
+    background: #fff;
+    font-weight: 600;
+}
+.tiny-ecuaciones-teclas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr));
+    gap: .3rem;
+}
+.tiny-ecuaciones-teclas-anchas {
+    grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+}
+.tiny-ecuaciones-tecla {
+    min-height: 2.75rem;
+    padding: .25rem;
+    overflow: hidden;
+    font-size: 1rem;
+    background: #f5f6f7;
+    border: 1px solid #ced4da;
+    border-radius: .375rem;
+}
+.tiny-ecuaciones-tecla:hover,
+.tiny-ecuaciones-tecla:focus-visible {
+    background: #e8f1fa;
+    border-color: #0f6cbf;
+}
+.tiny-ecuaciones-teclas[hidden] {
+    display: none;
+}
+.tiny-ecuaciones-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-top: .8rem;
+}
+.tiny-ecuaciones-codigo {
+    margin-top: .5rem;
+}
+.tiny-ecuaciones-codigo textarea {
+    font-family: SFMono-Regular, Menlo, Consolas, monospace;
+}
+/* El teclado en pantalla de MathLive (celulares y tabletas) tiene que quedar sobre la ventana de
+   Moodle, que usa un z-index de alrededor de 1050. */
+:root {
+    --keyboard-zindex: 2000;
+}

@@ -1,0 +1,79 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template tiny_ecuaciones/dialogo
+
+    Cuerpo de la ventana del editor de ecuaciones.
+
+    Context variables required for this template:
+    * uid - identificador único del editor, para los id de las solapas.
+    * grupos - solapas de la paleta: id, nombre, activo, ancho y botones (tex, nombre, vista en HTML).
+    * bloque - si la fórmula va centrada en su propio renglón.
+    * sinfiltro - si en este contexto no hay filtro de matemática activo.
+
+    Example context (json):
+    {
+        "uid": "id_introeditor",
+        "grupos": [{"id": "basico", "nombre": "Básico", "activo": true, "ancho": false,
+            "botones": [{"tex": "\\frac{#@}{#?}", "nombre": "Fracción", "vista": "<span>a/b</span>"}]}],
+        "bloque": false,
+        "sinfiltro": false
+    }
+}}
+<div class="tiny-ecuaciones">
+    {{#sinfiltro}}
+    <div class="alert alert-warning">{{#str}} filtroinactivo, tiny_ecuaciones {{/str}}</div>
+    {{/sinfiltro}}
+    <label class="visually-hidden" for="{{uid}}-campo">{{#str}} campo, tiny_ecuaciones {{/str}}</label>
+    <math-field id="{{uid}}-campo" class="tiny-ecuaciones-campo"></math-field>
+    <p class="tiny-ecuaciones-ayuda form-text text-muted">{{#str}} ayuda, tiny_ecuaciones {{/str}}</p>
+
+    <div class="tiny-ecuaciones-solapas" role="tablist" aria-label="{{#str}} paleta, tiny_ecuaciones {{/str}}">
+        {{#grupos}}
+        <button type="button" role="tab" id="{{uid}}-solapa-{{id}}" aria-controls="{{uid}}-grupo-{{id}}"
+            class="btn btn-sm {{#activo}}active{{/activo}}"
+            aria-selected="{{#activo}}true{{/activo}}{{^activo}}false{{/activo}}"
+            tabindex="{{#activo}}0{{/activo}}{{^activo}}-1{{/activo}}">{{nombre}}</button>
+        {{/grupos}}
+    </div>
+    {{#grupos}}
+    <div role="tabpanel" id="{{uid}}-grupo-{{id}}" aria-labelledby="{{uid}}-solapa-{{id}}"
+        class="tiny-ecuaciones-teclas {{#ancho}}tiny-ecuaciones-teclas-anchas{{/ancho}}" {{^activo}}hidden{{/activo}}>
+        {{#botones}}
+        <button type="button" class="tiny-ecuaciones-tecla" data-tex="{{tex}}" title="{{nombre}}" aria-label="{{nombre}}">
+            <span aria-hidden="true">{{{vista}}}</span>
+        </button>
+        {{/botones}}
+    </div>
+    {{/grupos}}
+
+    <div class="tiny-ecuaciones-opciones">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="{{uid}}-bloque" data-region="bloque" {{#bloque}}checked{{/bloque}}>
+            <label class="form-check-label" for="{{uid}}-bloque">{{#str}} bloque, tiny_ecuaciones {{/str}}</label>
+        </div>
+        <button type="button" class="btn btn-link btn-sm" data-action="borrar">{{#str}} borrar, tiny_ecuaciones {{/str}}</button>
+    </div>
+
+    <details class="tiny-ecuaciones-codigo">
+        <summary>{{#str}} codigo, tiny_ecuaciones {{/str}}</summary>
+        <label class="visually-hidden" for="{{uid}}-codigo">{{#str}} codigo, tiny_ecuaciones {{/str}}</label>
+        <textarea id="{{uid}}-codigo" class="form-control" rows="2" spellcheck="false" dir="ltr"
+            data-region="codigo"></textarea>
+        <p class="form-text text-muted">{{#str}} codigo_ayuda, tiny_ecuaciones {{/str}}</p>
+    </details>
+</div>
