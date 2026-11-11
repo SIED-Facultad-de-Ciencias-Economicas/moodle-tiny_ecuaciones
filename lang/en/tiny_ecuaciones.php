@@ -131,6 +131,6 @@ $string['g_funciones'] = 'Functions';
 $string['g_griegas'] = 'Greek';
 $string['insertar'] = 'Insert';
 $string['paleta'] = 'Symbols and templates';
-$string['pluginname'] = 'Equation editor';
+$string['pluginname'] = 'Visual equation editor';
 $string['privacy:metadata'] = 'The equation editor does not store any personal data.';
 $string['vacios'] = 'There are empty boxes left. Fill them in or delete them before inserting the formula.';
