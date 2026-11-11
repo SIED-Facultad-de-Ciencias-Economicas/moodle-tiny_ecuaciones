@@ -1,0 +1,80 @@
+# Rehace amd/build con el grunt de Moodle (minificado y con mapas, como lo espera el directorio de
+# plugins) y lo sube a la misma rama. Corre sola cuando cambia amd/src, y a mano desde Actions.
+name: Compilar JavaScript
+
+on:
+  push:
+    paths:
+      - 'amd/src/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compilar:
+    runs-on: ubuntu-24.04
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: 'postgres'
+          POSTGRES_HOST_AUTH_METHOD: 'trust'
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+
+    steps:
+      - name: Bajar el plugin
+        uses: actions/checkout@v4
+        with:
+          path: plugin
+
+      - name: Preparar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          ini-values: max_input_vars=5000
+          coverage: none
+
+      - name: Instalar moodle-plugin-ci
+        run: |
+          composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^4
+          echo $(cd ci/bin; pwd) >> $GITHUB_PATH
+          echo $(cd ci/vendor/bin; pwd) >> $GITHUB_PATH
+          echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
+
+      - name: Instalar Moodle con el plugin
+        run: moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1 --no-init
+        env:
+          DB: pgsql
+          MOODLE_BRANCH: MOODLE_503_STABLE
+
+      - name: Compilar con grunt
+        run: |
+          destino=$(find moodle -path '*/lib/editor/tiny/plugins/ecuaciones' \( -type d -o -type l \) | head -1)
+          echo "Plugin dentro de Moodle: $destino"
+          cd moodle
+          source "$NVM_DIR/nvm.sh"
+          nvm use
+          npx grunt amd --root="${destino#moodle/}"
+          cd ..
+          # Si moodle-plugin-ci lo copió (y no lo enlazó), traer lo compilado a la copia del repo.
+          if [ "$(realpath "$destino")" != "$(realpath plugin)" ]; then
+            rm -f plugin/amd/build/*
+            cp "$destino"/amd/build/* plugin/amd/build/
+          fi
+
+      - name: Subir amd/build si cambió
+        working-directory: plugin
+        run: |
+          git add amd/build
+          if git diff --cached --quiet; then
+            echo "amd/build ya estaba al día."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "amd/build compilado con grunt"
+          git push

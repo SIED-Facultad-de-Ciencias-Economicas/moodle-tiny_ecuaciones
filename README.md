@@ -101,10 +101,13 @@ vendor/mathlive copia de MathLive 0.111.4         styles.css   estilos de la ven
 
 - Los botones de la paleta están en `amd/src/paleta.js`. Cada uno lleva su nombre en
   `lang/*/tiny_ecuaciones.php` (cadena `b_<clave>`).
-- **Después de tocar `amd/src` hay que compilar y commitear `amd/build`.** La forma oficial es
-  `npx grunt amd` desde la raíz de un Moodle de desarrollo con sus dependencias de Node. Sin ese
-  entorno, `tools/compilar.sh` hace lo mismo con el compilador de TypeScript (`tsc`), sin
-  instalar nada; su salida no está minificada.
+- **`amd/build` lo compila GitHub.** Al subir un cambio en `amd/src`, la Action «Compilar
+  JavaScript» lo pasa por el `grunt` de Moodle y sube `amd/build` a la misma rama. También se puede
+  correr a mano desde la pestaña Actions. Con un Moodle de desarrollo a mano, da lo mismo correr
+  `npx grunt amd` desde su raíz.
+- **Pruebas:** cada push corre la Action «Pruebas de Moodle» (`moodle-plugin-ci`): estilo de código,
+  PHPDoc, validación, plantillas, `grunt`, PHPUnit (`tests/`) y Behat (`tests/behat/`). Son los
+  mismos controles que usa el equipo de Moodle para revisar los plugins del directorio.
 - Para actualizar MathLive: reemplazar `vendor/mathlive` por `mathlive.min.js`, `mathlive-static.css`,
   `mathlive-fonts.css`, `fonts/` y `LICENSE.txt` del paquete nuevo, y cambiar la versión en
   `thirdpartylibs.xml`.
