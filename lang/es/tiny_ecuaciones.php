@@ -131,6 +131,6 @@ $string['g_funciones'] = 'Funciones';
 $string['g_griegas'] = 'Griegas';
 $string['insertar'] = 'Insertar';
 $string['paleta'] = 'Símbolos y plantillas';
-$string['pluginname'] = 'Editor de ecuaciones';
+$string['pluginname'] = 'Editor visual de ecuaciones';
 $string['privacy:metadata'] = 'El editor de ecuaciones no guarda datos personales.';
 $string['vacios'] = 'Quedan casilleros vacíos. Completalos o borralos antes de insertar la fórmula.';

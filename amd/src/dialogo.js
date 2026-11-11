@@ -31,7 +31,7 @@ import {component} from 'tiny_ecuaciones/common';
 import {cargarMathLive} from 'tiny_ecuaciones/mathlive';
 import {getUrlMathLive, isFiltroActivo} from 'tiny_ecuaciones/options';
 import {formulaSeleccionada, ponerFormula} from 'tiny_ecuaciones/formulas';
-import {GRUPOS, vistaDeBoton} from 'tiny_ecuaciones/paleta';
+import {GRUPOS, texDeBoton, vistaDeBoton} from 'tiny_ecuaciones/paleta';
 
 /**
  * Arma los datos de la plantilla: grupos y botones con su nombre y su dibujo.
@@ -46,17 +46,21 @@ const armarGrupos = async(ML) => {
         grupo.botones.forEach(([clave]) => pedidos.push({key: `b_${clave}`, component}));
     });
     const textos = await getStrings(pedidos);
+    const idioma = document.documentElement.lang || 'en';
     let i = 0;
     return GRUPOS.map((grupo, n) => ({
         id: grupo.id,
         nombre: textos[i++],
         activo: n === 0,
         ancho: !!grupo.ancho,
-        botones: grupo.botones.map(([, tex]) => ({
-            tex,
-            nombre: textos[i++],
-            vista: ML.convertLatexToMarkup(vistaDeBoton(tex)),
-        })),
+        botones: grupo.botones.map(([clave, latex]) => {
+            const tex = texDeBoton(clave, latex, idioma);
+            return {
+                tex,
+                nombre: textos[i++],
+                vista: ML.convertLatexToMarkup(vistaDeBoton(tex)),
+            };
+        }),
     }));
 };
 

@@ -51,9 +51,9 @@ export const GRUPOS = [
         ['porciento', '\\%'],
     ]},
     {id: 'funciones', botones: [
-        ['sen', '\\operatorname{sen}\\left(#0\\right)'],
+        ['sen', '\\sin\\left(#0\\right)'],
         ['cos', '\\cos\\left(#0\\right)'],
-        ['tg', '\\operatorname{tg}\\left(#0\\right)'],
+        ['tg', '\\tan\\left(#0\\right)'],
         ['log', '\\log\\left(#0\\right)'],
         ['logb', '\\log_{#?}\\left(#0\\right)'],
         ['ln', '\\ln\\left(#0\\right)'],
@@ -128,6 +128,25 @@ export const GRUPOS = [
         ['regresion', '\\hat{y}=\\beta_0+\\beta_1x'],
     ]},
 ];
+
+/**
+ * En español el seno y la tangente se escriben «sen» y «tg» (así se enseñan en la Argentina y en
+ * España); en los demás idiomas quedan sin y tan, como en LaTeX.
+ */
+const EN_ESPANOL = {
+    sen: '\\operatorname{sen}\\left(#0\\right)',
+    tg: '\\operatorname{tg}\\left(#0\\right)',
+};
+
+/**
+ * El LaTeX de un botón en el idioma de quien escribe.
+ *
+ * @param {string} clave
+ * @param {string} tex El LaTeX de GRUPOS.
+ * @param {string} idioma Código de idioma de Moodle (es, es_mx, en…).
+ * @returns {string}
+ */
+export const texDeBoton = (clave, tex, idioma) => (idioma.startsWith('es') && EN_ESPANOL[clave]) || tex;
 
 /**
  * El LaTeX de un botón tal como se muestra en él: cada casillero, como un cuadradito (\\square,

@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tiny_ecuaciones';
-$plugin->version   = 2026111100;
-$plugin->release   = '0.1.0';
+$plugin->version   = 2026111101;
+$plugin->release   = '0.2.0';
 $plugin->maturity  = MATURITY_BETA;
 // Moodle 4.5 (TinyMCE 7) en adelante; ver «Requisitos» en README.md.
 $plugin->requires  = 2024100700;
