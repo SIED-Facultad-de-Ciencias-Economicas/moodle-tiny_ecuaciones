@@ -1,3 +1,17 @@
+/* Etiquetas sólo para lectores de pantalla. Clase propia porque Bootstrap la llama distinto en
+   Moodle 4.5 (sr-only) y en 5.x (visually-hidden, y allí sr-only está dada de baja). */
+.tiny-ecuaciones-oculto {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
 /* Ventana del editor de ecuaciones (tiny_ecuaciones). */
 .tiny-ecuaciones-campo {
     display: block;
