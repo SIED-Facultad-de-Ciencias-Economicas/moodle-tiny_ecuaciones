@@ -112,9 +112,10 @@ vendor/mathlive copia de MathLive 0.111.4         styles.css   estilos de la ven
   PHPDoc, validación, plantillas, `grunt`, PHPUnit (`tests/`) y Behat (`tests/behat/`). Son los
   mismos controles que usa el equipo de Moodle para revisar los plugins del directorio.
 - **Publicar una versión:** subir `$plugin->version` y `$plugin->release` en `version.php`,
-  anotar los cambios en `CHANGES.md` y, ya en `main`, crear la etiqueta `v<release>` (por ejemplo
-  `v0.2.0`). La Action «Publicar versión» controla que coincidan y deja en Releases dos ZIP: el
-  completo, para la FCE, y el «directorio», sólo con inglés, para moodle.org/plugins.
+  anotar los cambios en `CHANGES.md` y, ya en `main`, correr Actions → «Publicar versión» → Run
+  workflow (sobre `main`). Crea la etiqueta `v<release>` (por ejemplo `v0.2.0`) y deja en Releases
+  dos ZIP: el completo, para la FCE, y el «directorio», sólo con inglés, para moodle.org/plugins.
+  También corre si se sube la etiqueta a mano; en ese caso controla que coincida con `version.php`.
 - **Traducciones:** el directorio de Moodle carga las traducciones desde AMOS
   (lang.moodle.org), no desde el plugin. Una vez aprobado, el español de `lang/es/` se sube ahí; el
   ZIP completo lo sigue trayendo para que la FCE no dependa de eso.
