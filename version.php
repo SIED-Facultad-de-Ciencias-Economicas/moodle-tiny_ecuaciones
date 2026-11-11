@@ -25,8 +25,11 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tiny_ecuaciones';
-$plugin->version   = 2026111101;
-$plugin->release   = '0.2.0';
+$plugin->version   = 2026111102;
+$plugin->release   = '0.2.1';
 $plugin->maturity  = MATURITY_BETA;
 // Moodle 4.5 (TinyMCE 7) en adelante; ver «Requisitos» en README.md.
 $plugin->requires  = 2024100700;
+// Sin $plugin->supported a propósito: el plugin apunta a toda versión desde 4.5, y ese campo haría que
+// Moodle marcara como «no soportada» cualquier versión nueva. Las probadas son las de la Action
+// «Pruebas de Moodle» (.github/workflows/ci.yml).

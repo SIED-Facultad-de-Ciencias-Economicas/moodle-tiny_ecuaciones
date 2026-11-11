@@ -1,5 +1,9 @@
 # Cambios
 
+## 0.2.1 — 11 de noviembre de 2026
+
+- Probado en todas las versiones de Moodle desde la 4.5: 4.5, 5.0, 5.1, 5.2 y 5.3.
+
 ## 0.2.0 — 11 de noviembre de 2026
 
 - Nombre: «Editor visual de ecuaciones» (*Visual equation editor* en inglés), para distinguirlo del
