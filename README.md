@@ -42,8 +42,8 @@ contenido:
 
 ## Requisitos
 
-- **Moodle 4.5 o posterior** (TinyMCE 7 en 4.5, TinyMCE 8 en 5.3). Se probó en 4.5 y en 5.3; las
-  versiones intermedias (5.0, 5.1 y 5.2) usan la misma interfaz de plugins del editor.
+- **Moodle 4.5 o posterior.** Cada cambio se prueba en 4.5, 5.0, 5.1, 5.2 y 5.3 (TinyMCE 7 y 8).
+  Cuando sale una versión nueva de Moodle, se suma a las pruebas (`.github/workflows/ci.yml`).
 - El filtro **«MathJax»** activo (Administración del sitio → Extensiones → Filtros). Viene activo
   de fábrica. Si no lo está, la ventana avisa que las fórmulas se van a ver como código.
 - Nada más: no lleva base de datos propia, ni tareas programadas, ni servicios externos. MathLive
@@ -116,6 +116,8 @@ vendor/mathlive copia de MathLive 0.111.4         styles.css   estilos de la ven
   workflow (sobre `main`). Crea la etiqueta `v<release>` (por ejemplo `v0.2.0`) y deja en Releases
   dos ZIP: el completo, para la FCE, y el «directorio», sólo con inglés, para moodle.org/plugins.
   También corre si se sube la etiqueta a mano; en ese caso controla que coincida con `version.php`.
+- **moodle.org:** lo que va en cada campo del directorio de plugins está en
+  [`docs/ficha-moodle-org.md`](docs/ficha-moodle-org.md).
 - **Traducciones:** el directorio de Moodle carga las traducciones desde AMOS
   (lang.moodle.org), no desde el plugin. Una vez aprobado, el español de `lang/es/` se sube ahí; el
   ZIP completo lo sigue trayendo para que la FCE no dependa de eso.
@@ -125,8 +127,8 @@ vendor/mathlive copia de MathLive 0.111.4         styles.css   estilos de la ven
 
 ## Cómo se probó
 
-**Pruebas automáticas.** Cada cambio pasa por `moodle-plugin-ci` en Moodle 4.5 (PHP 8.1) y 5.3
-(PHP 8.3): estilo de código, PHPDoc, validación, plantillas, `grunt`, PHPUnit y cuatro escenarios
+**Pruebas automáticas.** Cada cambio pasa por `moodle-plugin-ci` en Moodle 4.5, 5.0, 5.1, 5.2 y 5.3,
+cada una con el PHP más viejo que admite: estilo de código, PHPDoc, validación, plantillas, `grunt`, PHPUnit y cuatro escenarios
 Behat (insertar con los botones, el aviso de casilleros vacíos, el dibujo de las fórmulas guardadas
 con su vuelta a LaTeX, y la reedición).
 
@@ -143,9 +145,11 @@ con su vuelta a LaTeX, y la reedición).
 - Fórmulas con código malicioso (`\text{<img onerror>}`, `\href{javascript:…}`, `\class`): no
   agregan HTML ni se ejecutan dentro del editor. La que MathLive rechaza queda como texto.
 
-**Falta probar:** Moodle 5.0, 5.1 y 5.2, y Safari en iPhone. En las pruebas a mano MathJax no
-pudo bajarse de Internet: en 5.3 se usó una copia local sin sus fuentes (las fórmulas salían con
-letras de reemplazo) y en 4.5 no se dibujaron en la página publicada (sí en el editor). Antes de usarlo en producción conviene probarlo en el Moodle de prueba de la facultad.
+**Falta probar:** Safari en iPhone, y a mano Moodle 5.0, 5.1 y 5.2 (pasan las pruebas automáticas).
+En las pruebas a mano MathJax no pudo bajarse de Internet: en 5.3 se usó una copia local sin sus
+fuentes (las fórmulas salían con letras de reemplazo) y en 4.5 no se dibujaron en la página
+publicada (sí en el editor). Antes de usarlo en producción conviene probarlo en el Moodle de prueba
+de la facultad.
 
 ![En el celular, con el teclado matemático](docs/celular.png)
 
