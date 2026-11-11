@@ -1,11 +1,13 @@
 # Rehace amd/build con el grunt de Moodle (minificado y con mapas, como lo espera el directorio de
-# plugins) y lo sube a la misma rama. Corre sola cuando cambia amd/src, y a mano desde Actions.
+# plugins) y lo sube a la misma rama. Corre sola cuando cambia amd/src (o este archivo), y a mano
+# desde Actions (eso sólo anda una vez que el archivo está en main).
 name: Compilar JavaScript
 
 on:
   push:
     paths:
       - 'amd/src/**'
+      - '.github/workflows/compilar-amd.yml'
   workflow_dispatch:
 
 permissions:
