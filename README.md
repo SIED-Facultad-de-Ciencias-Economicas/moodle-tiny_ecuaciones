@@ -1,6 +1,6 @@
 # Editor de ecuaciones para Moodle (`tiny_ecuaciones`)
 
-Plugin para el editor TinyMCE de Moodle que permite escribir fórmulas como en una calculadora
+Plugin para el editor TinyMCE de Moodle que permite armar fórmulas en forma gráfica, con botones como los de una calculadora
 científica, sin saber LaTeX. Lo pueden usar los docentes en recursos y actividades, y los alumnos
 en foros, tareas, wikis y preguntas de ensayo de los cuestionarios.
 
@@ -11,13 +11,15 @@ SIED · Facultad de Ciencias Económicas · Universidad Nacional de Cuyo.
 ## Qué hace
 
 - Suma un botón **Fórmula** (√x) a la barra del editor y al menú **Insertar**.
-- La ventana tiene un campo visual: `/` arma una fracción, `^` una potencia y `sqrt` una raíz, y con
-  las flechas o Tab se pasa de un casillero a otro. Debajo hay botones en seis solapas: Básico,
+- La fórmula se arma **en forma gráfica**: se elige un botón (fracción, potencia, raíz…) y se
+  completan los casilleros que aparecen, viendo en todo momento la fórmula como va a quedar. No
+  hace falta conocer ningún atajo ni código. Los botones están en seis solapas: Básico,
   Funciones, Cálculo, Griegas, Conjuntos y matrices, y **Economía y finanzas** (interés compuesto,
   tasa efectiva, valor actual, VAN, TIR, elasticidad, costo marginal, promedio, desvío y regresión).
 - Para quien lo prefiera, el **código LaTeX** se ve y se edita en la misma ventana.
 - Las fórmulas se ven dibujadas **dentro del editor**, y con doble clic se vuelven a editar.
 - En celulares y tabletas aparece un teclado matemático en pantalla.
+- Si quedan casilleros sin completar, la ventana lo avisa y no inserta la fórmula.
 - Toda la interfaz está en español y en inglés.
 
 ![Las fórmulas dibujadas dentro del editor](docs/editor.png)

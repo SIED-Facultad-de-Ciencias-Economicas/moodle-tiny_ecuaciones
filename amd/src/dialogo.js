@@ -117,6 +117,10 @@ export const abrirDialogo = async(editor) => {
         campo.mathVirtualKeyboardPolicy = 'auto';
         campo.smartFence = true;
         campo.popoverPolicy = 'off';
+        // La fórmula se arma con los botones, no tecleando atajos: «sqrt» o «pi» quedan como letras
+        // y «/» como una barra, en lugar de convertirse en una raíz, π o una fracción.
+        campo.inlineShortcuts = {};
+        campo.keybindings = [...campo.keybindings, {key: '/', command: ['insert', '/']}];
         campo.value = tex;
         codigo.value = tex;
 
@@ -125,6 +129,14 @@ export const abrirDialogo = async(editor) => {
         });
         codigo.addEventListener('input', () => {
             campo.setValue(codigo.value, {silenceNotifications: true});
+        });
+
+        // Tocar un botón de la paleta no le saca el foco al campo: lo que se escribe enseguida entra
+        // en el casillero que quedó marcado.
+        raiz.addEventListener('mousedown', (e) => {
+            if (e.target.closest('[data-tex]')) {
+                e.preventDefault();
+            }
         });
 
         raiz.addEventListener('click', (e) => {
@@ -166,9 +178,21 @@ export const abrirDialogo = async(editor) => {
         // El teclado en pantalla de MathLive se cierra junto con la ventana.
         modal.getRoot().on(ModalEvents.hidden, () => window.mathVirtualKeyboard?.hide());
 
-        modal.getRoot().on(ModalEvents.save, () => {
+        const aviso = raiz.querySelector('[data-region="vacios"]');
+        campo.addEventListener('input', () => {
+            aviso.hidden = true;
+        });
+
+        modal.getRoot().on(ModalEvents.save, (e) => {
             const nuevo = campo.value.trim();
             if (!nuevo) {
+                return;
+            }
+            // Un casillero sin completar no es LaTeX que MathJax entienda: se pide completarlo.
+            if (nuevo.includes('\\placeholder')) {
+                e.preventDefault();
+                aviso.hidden = false;
+                campo.focus();
                 return;
             }
             let nuevoTipo = 'linea';

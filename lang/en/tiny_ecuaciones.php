@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['actualizar'] = 'Update';
-$string['ayuda'] = 'Type as on a scientific calculator: / makes a fraction, ^ a power and sqrt a square root; arrows and Tab move between boxes. Or use the buttons.';
+$string['ayuda'] = 'Choose a button (fraction, power, root…) and fill in the boxes that appear. To move to another box, click it or use the arrow keys.';
 $string['b_alfa'] = 'Alpha';
 $string['b_aprox'] = 'Approximately';
 $string['b_beta'] = 'Beta';
@@ -133,3 +133,4 @@ $string['insertar'] = 'Insert';
 $string['paleta'] = 'Symbols and templates';
 $string['pluginname'] = 'Equation editor';
 $string['privacy:metadata'] = 'The equation editor does not store any personal data.';
+$string['vacios'] = 'There are empty boxes left. Fill them in or delete them before inserting the formula.';

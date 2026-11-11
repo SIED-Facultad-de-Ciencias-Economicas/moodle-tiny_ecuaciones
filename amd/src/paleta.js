@@ -130,12 +130,11 @@ export const GRUPOS = [
 ];
 
 /**
- * El LaTeX de un botón tal como se muestra en él: los casilleros, como cuadraditos (\\square,
+ * El LaTeX de un botón tal como se muestra en él: cada casillero, como un cuadradito (\\square,
  * porque el dibujo estático de MathLive no muestra \\placeholder).
  *
  * @param {string} tex
  * @returns {string}
  */
 export const vistaDeBoton = (tex) => tex
-    .replace(/#@/g, 'x')
-    .replace(/#[0?]/g, '\\square');
+    .replace(/#[@0?]/g, '\\square');

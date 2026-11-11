@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['actualizar'] = 'Actualizar';
-$string['ayuda'] = 'Escribí como en una calculadora científica: / arma una fracción, ^ una potencia y sqrt una raíz; con las flechas y Tab pasás de un casillero a otro. O usá los botones.';
+$string['ayuda'] = 'Elegí un botón (fracción, potencia, raíz…) y completá los casilleros que aparecen. Para pasar de un casillero a otro, hacé clic en él o usá las flechas.';
 $string['b_alfa'] = 'Alfa';
 $string['b_aprox'] = 'Aproximadamente';
 $string['b_beta'] = 'Beta';
@@ -133,3 +133,4 @@ $string['insertar'] = 'Insertar';
 $string['paleta'] = 'Símbolos y plantillas';
 $string['pluginname'] = 'Editor de ecuaciones';
 $string['privacy:metadata'] = 'El editor de ecuaciones no guarda datos personales.';
+$string['vacios'] = 'Quedan casilleros vacíos. Completalos o borralos antes de insertar la fórmula.';
