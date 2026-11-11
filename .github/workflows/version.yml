@@ -1,5 +1,6 @@
-# Al subir una etiqueta vX.Y.Z (la misma versión que $plugin->release en version.php), arma los ZIP
-# instalables y los publica en Releases de GitHub:
+# Publica una versión: arma los ZIP instalables y los deja en Releases de GitHub. Corre al subir una
+# etiqueta vX.Y.Z, o a mano desde Actions → «Publicar versión» → Run workflow, que crea la etiqueta
+# sobre main con la versión de version.php ($plugin->release). Los ZIP son:
 #   tiny_ecuaciones-X.Y.Z.zip             completo, con español: el que se instala en la FCE.
 #   tiny_ecuaciones-X.Y.Z-directorio.zip  sólo con inglés, para moodle.org/plugins: las otras
 #                                         traducciones se cargan en AMOS.
@@ -9,6 +10,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -22,16 +24,29 @@ jobs:
         with:
           path: ecuaciones
 
-      - name: Controlar que la etiqueta coincida con version.php
+      - name: Versión y etiqueta
+        working-directory: ecuaciones
         run: |
-          version="${GITHUB_REF_NAME#v}"
-          release=$(sed -n "s/^\$plugin->release *= *'\(.*\)';.*/\1/p" ecuaciones/version.php)
-          echo "Etiqueta: $version · version.php: $release"
-          test "$version" = "$release"
+          release=$(sed -n "s/^\$plugin->release *= *'\(.*\)';.*/\1/p" version.php)
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            # Etiqueta subida a mano: tiene que coincidir con version.php.
+            echo "Etiqueta: ${GITHUB_REF_NAME#v} · version.php: $release"
+            test "${GITHUB_REF_NAME#v}" = "$release"
+          else
+            # A mano desde Actions: sólo desde main, y crea la etiqueta si no existe.
+            test "$GITHUB_REF_NAME" = "main"
+            if git ls-remote --exit-code --tags origin "v$release" > /dev/null; then
+              echo "La etiqueta v$release ya existe."
+            else
+              git tag "v$release"
+              git push origin "v$release"
+            fi
+          fi
+          echo "VERSION=$release" >> "$GITHUB_ENV"
 
       - name: Armar los ZIP
         run: |
-          version="${GITHUB_REF_NAME#v}"
+          version="$VERSION"
           rm -rf ecuaciones/.git ecuaciones/.github
           zip -qr "tiny_ecuaciones-$version.zip" ecuaciones
           mkdir directorio
@@ -44,6 +59,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" tiny_ecuaciones-*.zip \
-            --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" \
-            --notes "Cambios en CHANGES.md. Para instalar en la FCE: tiny_ecuaciones-${GITHUB_REF_NAME#v}.zip."
+          if gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "v$VERSION" tiny_ecuaciones-*.zip --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "v$VERSION" tiny_ecuaciones-*.zip \
+              --repo "$GITHUB_REPOSITORY" --title "v$VERSION" --verify-tag \
+              --notes "Cambios en CHANGES.md. Para instalar en la FCE: tiny_ecuaciones-$VERSION.zip."
+          fi
